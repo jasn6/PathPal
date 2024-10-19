@@ -107,6 +107,48 @@ export default function DisplayList({
     }
   };
 
+  const deleteEntry = async (location) => {
+    try {
+      await Promise.all([
+        fetch(`http://localhost:3001/api/place/${listItem._id}/${location}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }),
+        fetch(
+          `http://localhost:3001/api/list/${listItem._id}/${location}/deletePlace`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        ),
+      ]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePlaceDelete = async (locationId, placeIndex) => {
+    try {
+      deleteEntry(locationId);
+      const updatedPlaces = places.filter((_, idx) => idx !== placeIndex);
+      setPlaces(updatedPlaces);
+
+      const updatedAllPlaces = [...allPlaces];
+      updatedAllPlaces[listIndex] = updatedPlaces;
+      setAllPlaces(updatedAllPlaces);
+
+      rearrangePlaces(updatedPlaces);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getPlaces();
   }, []);
@@ -208,6 +250,13 @@ export default function DisplayList({
                     image={value.photo?.images?.medium?.url || defaultImageUrl}
                     title={value.name}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <IconButton
+                    onClick={() => handlePlaceDelete(value.location_id, index)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </Grid>
               </Grid>
             </Card>
