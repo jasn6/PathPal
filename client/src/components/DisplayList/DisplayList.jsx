@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./styles.css";
 
 const defaultImageUrl = "/static/images/temp-background.jpeg";
@@ -33,6 +34,12 @@ export default function DisplayList({
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [elRefs, setElRefs] = useState([]);
+
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  const toggleExpand = (index) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
 
   const getPlaces = async () => {
     try {
@@ -235,16 +242,46 @@ export default function DisplayList({
         }}
         renderList={({ children, props }) => <Box {...props}>{children}</Box>}
         renderItem={({ value, props, index }) => {
+          const isExpanded = expandedIndex === index;
           return (
-            <Card className="card" {...props} key={value.location_id}>
+            <Card
+              className={`card ${isExpanded ? "expanded" : ""}`}
+              {...props}
+              key={value.location_id}
+            >
               <Grid ref={elRefs[index]} container spacing={0}>
                 <Grid item xs={8}>
-                  <CardContent>
+                  <CardContent className="cardContent">
                     <Typography variant="h6">{value.name}</Typography>
-                    <Typography variant="body2">{value.description}</Typography>
+                    <Typography
+                      variant="body2"
+                      className={`description ${isExpanded ? "expanded" : ""}`}
+                    >
+                      {value.description || "No description available"}
+                    </Typography>
+                    {value.description?.length > 100 && (
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        className="expandContainer"
+                      >
+                        <IconButton
+                          onClick={() => toggleExpand(index)}
+                          className={`expandIconButton ${
+                            isExpanded ? "expanded" : ""
+                          }`}
+                        >
+                          <ExpandMoreIcon
+                            className={`expandIcon ${
+                              isExpanded ? "expanded" : ""
+                            }`}
+                          />
+                        </IconButton>
+                      </Box>
+                    )}
                   </CardContent>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} className="mediaWrapper">
                   <CardMedia
                     className="media"
                     image={value.photo?.images?.medium?.url || defaultImageUrl}
@@ -252,11 +289,15 @@ export default function DisplayList({
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <IconButton
-                    onClick={() => handlePlaceDelete(value.location_id, index)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  <div className="deleteIconWrapper">
+                    <IconButton
+                      onClick={() =>
+                        handlePlaceDelete(value.location_id, index)
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>
                 </Grid>
               </Grid>
             </Card>
