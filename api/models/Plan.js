@@ -28,6 +28,9 @@ const PlanSchema = new Schema(
       type: Date,
       required: false,
     },
+    photoUrl: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

@@ -23,6 +23,14 @@ export default function HomePage() {
 
   async function handleCreate() {
     try {
+      const unsplashRes = await fetch(
+        `https://api.unsplash.com/search/photos?query=${thePlace.formatted_address}&client_id=${process.env.REACT_APP_UNSPLASH_API_KEY}`
+      );
+      const unsplashData = await unsplashRes.json();
+      const photoUrl =
+        unsplashData.results[0]?.urls?.regular ||
+        "/static/images/temp-background.jpeg";
+
       const res = await fetch("http://localhost:3001/api/plan/create", {
         method: "POST",
         headers: {
@@ -37,6 +45,7 @@ export default function HomePage() {
           fromDate: fromDate ? dayjs(fromDate).toISOString() : null,
           toDate: toDate ? dayjs(toDate).toISOString() : null,
           lists: [],
+          photoUrl: photoUrl,
         }),
       });
       const data = await res.json();

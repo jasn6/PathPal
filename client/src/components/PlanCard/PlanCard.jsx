@@ -78,7 +78,7 @@ export default function PlanCard({ userPlan, isMoving, onDelete, planIndex }) {
       >
         <CardMedia
           sx={useCardStyles.media}
-          image="/static/images/temp-background.jpeg"
+          image={userPlan.photoUrl}
           title={userPlan.title}
         />
         <CardContent>
