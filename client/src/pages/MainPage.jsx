@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@mui/material"; // Keep only TextField from MUI
+import { TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Header from "../components/Header/Header";
@@ -15,7 +15,8 @@ export default function MainPage() {
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const navigate = useNavigate();
-
+  
+  // Initialize Google Places Autocomplete
   const { ref: materialRef } = usePlacesWidget({
     apiKey: process.env.REACT_APP_MAPS_KEY,
     onPlaceSelected: (place) => setPlace(place),
@@ -40,6 +41,11 @@ export default function MainPage() {
   };
 
   const handleCreate = async () => {
+    if (!thePlace || !thePlace.formatted_address || !thePlace.geometry) {
+      console.error("Please select a valid location from the autocomplete suggestions.");
+      return;
+    }
+
     try {
       const unsplashRes = await fetch(
         `https://api.unsplash.com/search/photos?query=${thePlace.formatted_address}&client_id=${process.env.REACT_APP_UNSPLASH_API_KEY}`
@@ -118,7 +124,9 @@ export default function MainPage() {
               color="secondary"
               variant="outlined"
               placeholder="Enter location"
-              inputRef={materialRef}
+              InputProps={{
+                inputRef: materialRef, // Pass materialRef to inputRef here
+              }}
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.8)",
                 borderRadius: "8px",
