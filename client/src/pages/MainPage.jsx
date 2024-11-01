@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Box, Grid } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { TextField } from "@mui/material"; // Keep only TextField from MUI
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Header from "../components/Header/Header";
@@ -95,63 +92,64 @@ export default function MainPage() {
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="MainPage-loading">Loading...</div>;
   }
 
   return (
     <>
-      <video className="background-video" autoPlay={true} muted loop>
+      <video className="MainPage-background-video" autoPlay={true} muted loop>
         <source src={require("./PathPal.mp4")} type="video/mp4" />
       </video>
 
       <Header />
-      <Box className="box">
-        {/* Display Existing Trips */}
+      <div className="MainPage-box">
         <ImageCarousel userPlans={userPlans} onDelete={onDelete} />
-      </Box>
+      </div>
 
-      {/* Plan a New Trip Section */}
-      <div className="shadow">
-        <Box className="newTripSection">
-          <Box className="tripHeader">
-            <br />Plan a new trip
-          </Box>
+      <div className="MainPage-shadow">
+        <div className="MainPage-centerContent">
+          <div className="MainPage-tripHeader">
+            Plan a new trip
+          </div>
 
-          <div className="inputField">
+          <div className="MainPage-inputField">
             <TextField
               fullWidth
               color="secondary"
               variant="outlined"
               placeholder="Enter location"
-              inputRef={materialRef} // Connect the ref directly here
+              inputRef={materialRef}
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                borderRadius: "8px",
+                padding: "10px",
+                fontSize: "18px",
+                color: "#333",
+              }}
             />
           </div>
 
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Grid container spacing={2} justifyContent="center" mt={2}>
-              <Grid item>
-                <DatePicker
-                  label="Start Date"
-                  value={fromDate}
-                  onChange={(newValue) => setFromDate(newValue)}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </Grid>
-              <Grid item>
-                <DatePicker
-                  label="End Date"
-                  value={toDate}
-                  onChange={(newValue) => setToDate(newValue)}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </Grid>
-            </Grid>
-          </LocalizationProvider>
+          <div className="MainPage-datePickerContainer">
+            <input
+              type="date"
+              value={fromDate || ''}
+              onChange={(e) => setFromDate(e.target.value)}
+              className="MainPage-datePicker"
+              placeholder="Start Date"
+            />
+            <input
+              type="date"
+              value={toDate || ''}
+              onChange={(e) => setToDate(e.target.value)}
+              className="MainPage-datePicker"
+              placeholder="End Date"
+            />
+          </div>
 
-          <Button onClick={handleCreate} variant="contained" className="beginButton" sx={{ mt: 3 }}>
+          <button onClick={handleCreate} className="MainPage-beginButton">
             Begin
-          </Button>
-        </Box>
+          </button>
+        </div>
       </div>
     </>
   );
