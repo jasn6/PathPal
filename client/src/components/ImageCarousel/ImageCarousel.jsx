@@ -6,7 +6,6 @@ import PlanCard from "../PlanCard/PlanCard";
 const useStyles = {
   carouselContainer: {
     backgroundColor: "#F5EFE6",
-    padding: "20px",
     borderRadius: "8px",
     border: "1px solid #E8DFCA",
   },

@@ -20,7 +20,7 @@ const useCardStyles = {
     border: "1px solid #1A4D2E",
   },
   media: {
-    height: 160,
+    height: 120
   },
   title: {
     color: "#1A4D2E",

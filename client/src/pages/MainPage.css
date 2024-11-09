@@ -5,14 +5,15 @@
     position: fixed;
     z-index: -2;
     opacity: 80%;
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .MainPage-box {
     background-color: #F5EFE6;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
     border: 1px solid #E8DFCA;
+    z-index: 1;
 }
 
 .MainPage-loading {
@@ -38,10 +39,10 @@
 }
 
 .MainPage-centerContent {
-    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin-top: -280px;
 }
 
 .MainPage-tripHeader {
