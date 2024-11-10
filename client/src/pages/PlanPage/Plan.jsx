@@ -154,6 +154,22 @@ export default function Plan() {
     fetchData();
   }, [planCode]);
 
+  useEffect(() => {
+    fetch("http://localhost:3001/api/placesCache/search")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+      });
+  }, []);
+
   if (!planInfo || !lists) {
     return <div>Loading...</div>;
   }

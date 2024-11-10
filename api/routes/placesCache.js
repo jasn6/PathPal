@@ -45,4 +45,16 @@ placesRouter.get("/location-details", async (req, res) => {
   }
 });
 
+placesRouter.get("/photos", async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://api.content.tripadvisor.com/api/v1/location/8532722/photos?key=BFB4EDF95F5B489399486EDDE1E3EAEA&language=en"
+    );
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch data" });
+  }
+});
+
 module.exports = placesRouter;
