@@ -5,6 +5,7 @@ const pathRoutes = require("./routes/plan.js");
 const placesCacheRoutes = require("./routes/placesCache.js");
 const listRoutes = require("./routes/list.js");
 const placeRoutes = require("./routes/place.js");
+const locationRoutes = require("./routes/location.js");
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.use("/plan", checkAuth, pathRoutes);
 router.use("/placesCache", checkAuth, placesCacheRoutes);
 router.use("/list", checkAuth, listRoutes);
 router.use("/place", checkAuth, placeRoutes);
+router.use("/location", checkAuth, locationRoutes);
 
 module.exports = router;
