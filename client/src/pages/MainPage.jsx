@@ -20,7 +20,7 @@ export default function MainPage() {
   const { ref: materialRef } = usePlacesWidget({
     apiKey: process.env.REACT_APP_MAPS_KEY,
     onPlaceSelected: (place) => setPlace(place),
-    inputAutocompleteValue: "country", // or "address"
+    inputAutocompleteValue: "countries", // or "address"
   });
 
   const getUserInfo = async () => {

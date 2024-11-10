@@ -1,37 +1,10 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPlanInfo } from "../../util/api";
 import DisplayList from "../../components/DisplayList/DisplayList";
 import Header from "../../components/Header/Header";
 import PlanMap from "../../components/PlanMap/PlanMap";
-import "./styles.css";
-import {
-  Grid,
-  Box,
-  Button,
-  Typography,
-  FormControl,
-  TextField,
-  InputAdornment,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-
-const useStyles = {
-  button: {
-    backgroundColor: "#4F6F52",
-    color: "#FFFFFF",
-    "&:hover": {
-      backgroundColor: "#1A4D2E",
-    },
-    marginBottom: "20px",
-  },
-  listContainer: {
-    backgroundColor: "#E8DFCA",
-    borderRadius: "8px",
-    overflowY: "scroll", // Enable scrolling
-    height: "calc(100vh - 64px)", // Adjust based on your layout needs
-  },
-};
+import "./Plan.css"; // Changed import to Plan.css
 
 export default function Plan() {
   const [planInfo, setPlanInfo] = useState(null);
@@ -93,8 +66,6 @@ export default function Plan() {
         }),
       });
       const data = await response.json();
-
-      // Ensure `prev` is an array before spreading
       setLists((prev) => (Array.isArray(prev) ? [...prev, data] : [data]));
     } catch (error) {
       console.error(error);
@@ -130,7 +101,7 @@ export default function Plan() {
         const promises = lists.map((list) => getPlaces(list));
         try {
           const placesResults = await Promise.all(promises);
-          setPlaces(placesResults); // Assuming each call returns an array of places
+          setPlaces(placesResults);
         } catch (error) {
           console.error("Failed to fetch places:", error);
         }
@@ -161,26 +132,22 @@ export default function Plan() {
   return (
     <>
       <Header />
-      <div className="container">
-        <Grid container>
-          <Grid item xs={12} md={6}>
-            <Box style={useStyles.listContainer}>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  navigate(`/plan/${planCode}/explore`);
-                }}
-                style={useStyles.button}
+      <div className="plan-container">
+        <div className="plan-grid-container">
+          <div className="plan-grid-item">
+            <div className="plan-list-container">
+              <button
+                className="plan-explore-button"
+                onClick={() => navigate(`/plan/${planCode}/explore`)}
               >
                 Explore Places
-              </Button>
-              <FormControl fullWidth className="titleFormControl">
-                <TextField
+              </button>
+              <div className="plan-title-form-control">
+                <input
+                  className="plan-title-text-field"
                   style={{ width: calculateWidth() }}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  variant="standard"
-                  className="titleTextField"
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => {
                     handleEdit();
@@ -188,21 +155,8 @@ export default function Plan() {
                   }}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
-                  InputProps={{
-                    disableUnderline: true,
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <EditIcon
-                          style={{
-                            visibility:
-                              isHovered || isFocused ? "visible" : "hidden",
-                          }}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
                 />
-              </FormControl>
+              </div>
               {lists &&
                 lists.length > 0 &&
                 lists.map((listItem, listIndex) => (
@@ -218,26 +172,21 @@ export default function Plan() {
                   />
                 ))}
 
-              <Button
-                sx={{ mt: 2 }}
-                onClick={handleAdd}
-                variant="contained"
-                style={useStyles.button}
-              >
+              <button className="plan-add-button" onClick={handleAdd}>
                 Add a new list
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box style={useStyles.mapContainer}>
+              </button>
+            </div>
+          </div>
+          <div className="plan-grid-item">
+            <div className="plan-map-container">
               <PlanMap
                 places={places}
                 coords={{ lat: planInfo.lat, lng: planInfo.lng }}
                 setChildClicked={setChildClicked}
               />
-            </Box>
-          </Grid>
-        </Grid>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
