@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { CssBaseline, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getPlacesInfo, getPlanInfo } from "../../util/api.js";
 import Map from "../../components/Map/Map";
 import ExploreList from "../../components/ExploreList/ExploreList";
 import Header from "../../components/Header/Header.jsx";
-import "./ExplorePage.css"; // Import the CSS file
+import "./ExplorePage.css";
 
 export default function ExplorePage() {
   const [coords, setCoords] = useState(null);
@@ -55,10 +54,9 @@ export default function ExplorePage() {
 
   return (
     <>
-      <CssBaseline />
       <Header />
-      <Grid container>
-        <Grid item xs={12} md={4} className="explore-list-container">
+      <div className="ExplorePage-container">
+        <div className="ExplorePage-list">
           <ExploreList
             plan={planCode}
             type={type}
@@ -66,11 +64,11 @@ export default function ExplorePage() {
             places={places}
             lists={lists}
           />
-        </Grid>
-        <Grid item xs={12} md={8}>
+        </div>
+        <div className="ExplorePage-map">
           <Map coords={coords} places={places} />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 }
