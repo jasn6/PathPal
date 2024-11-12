@@ -1,0 +1,125 @@
+/* Background styling */
+.LoginPage-background {
+    background-color: #F5EFE6; /* Light beige background */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Container styling for the form */
+  .LoginPage-container {
+    max-width: 400px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .LoginPage-container:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Avatar styling for the profile icon */
+  .LoginPage-avatar {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: #f50057; /* Secondary color for profile icon */
+  }
+  
+  .LoginPage-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  /* Title styling */
+  .LoginPage-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333333;
+  }
+  
+  /* Form styling */
+  .LoginPage-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .LoginPage-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .LoginPage-input:focus {
+    border-color: #3f51b5; /* Primary color */
+    box-shadow: 0 0 8px rgba(63, 81, 181, 0.2);
+    outline: none;
+  }
+  
+  /* Button styling */
+  .LoginPage-submitButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #3f51b5; /* Primary color */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .LoginPage-submitButton:hover {
+    background-color: #303f9f; /* Darker shade on hover */
+    box-shadow: 0 4px 12px rgba(48, 63, 159, 0.2);
+  }
+  
+  /* Links container styling */
+  .LoginPage-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Individual link styling */
+  .LoginPage-link {
+    color: #3f51b5; /* Primary color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .LoginPage-link:hover {
+    color: #303f9f;
+    text-decoration: underline;
+  }
+  
+  /* Adjusting spacing between the links */
+  .LoginPage-link:not(:last-child) {
+    margin-right: 8px; /* Adds space between the links */
+  }
+  
+  .LoginPage-Gap {
+    width: 70px;
+  }
