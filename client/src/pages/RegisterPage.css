@@ -1,0 +1,128 @@
+/* Background styling */
+.RegisterPage-background {
+    background-color: #F5EFE6; /* Light beige background */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Container styling for the form */
+  .RegisterPage-container {
+    max-width: 400px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .RegisterPage-container:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Avatar styling for the profile icon */
+  .RegisterPage-avatar {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: #f50057; /* Secondary color for profile icon */
+  }
+  
+  .RegisterPage-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  /* Title styling */
+  .RegisterPage-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333333;
+  }
+  
+  /* Form styling */
+  .RegisterPage-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Input grid for first and last name */
+  .RegisterPage-grid {
+    width: 100%;
+    display: flex;
+    gap: 8px; /* Adds space between first and last name inputs */
+    margin-bottom: 8px;
+  }
+  
+  .RegisterPage-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .RegisterPage-input.half-width {
+    width: calc(50% - 4px); /* Adjusts width to fit two inputs in a row */
+  }
+  
+  .RegisterPage-input:focus {
+    border-color: #3f51b5; /* Primary color */
+    box-shadow: 0 0 8px rgba(63, 81, 181, 0.2);
+    outline: none;
+  }
+  
+  /* Button styling */
+  .RegisterPage-submitButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #3f51b5; /* Primary color */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .RegisterPage-submitButton:hover {
+    background-color: #303f9f; /* Darker shade on hover */
+    box-shadow: 0 4px 12px rgba(48, 63, 159, 0.2);
+  }
+  
+  /* Links styling */
+  .RegisterPage-links {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  
+  .RegisterPage-link {
+    color: #3f51b5; /* Primary color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .RegisterPage-link:hover {
+    color: #303f9f;
+    text-decoration: underline;
+  }
+  

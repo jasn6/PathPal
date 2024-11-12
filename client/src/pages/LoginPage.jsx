@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="LoginPage-avatar">
           <FaUserCircle className="LoginPage-icon" />
         </div>
-        <h1 className="LoginPage-title">Sign in</h1>
+        <h1 className="LoginPage-title">Login</h1>
         <form onSubmit={handleSubmit} className="LoginPage-form">
           <input
             type="email"
@@ -66,7 +66,7 @@ export default function LoginPage() {
             className="LoginPage-input"
           />
           <button type="submit" className="LoginPage-submitButton">
-            Sign In
+            Login
           </button>
           <div className="LoginPage-links">
             <a href="#" className="LoginPage-link">
