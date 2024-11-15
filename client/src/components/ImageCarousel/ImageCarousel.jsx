@@ -1,16 +1,8 @@
 import React, { Component } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import "./ImageCarousel.css"; // Import the CSS file
 import PlanCard from "../PlanCard/PlanCard";
-
-const useStyles = {
-  carouselContainer: {
-    backgroundColor: "#F5EFE6",
-    padding: "20px",
-    borderRadius: "8px",
-    border: "1px solid #E8DFCA",
-  },
-};
 
 const responsive = {
   desktop: {
@@ -37,7 +29,7 @@ class ImageCarousel extends Component {
     const { userPlans, deviceType, onDelete } = this.props;
 
     return (
-      <div style={useStyles.carouselContainer}>
+      <div className="carousel-container">
         <Carousel
           responsive={responsive}
           ssr
@@ -45,7 +37,7 @@ class ImageCarousel extends Component {
           beforeChange={() => this.setState({ isMoving: true })}
           afterChange={() => this.setState({ isMoving: false })}
           deviceType={deviceType}
-          containerClass="carousel-container"
+          containerClass="carousel-inner-container"
           itemClass="carousel-item"
         >
           {userPlans.map((plan, index) => (

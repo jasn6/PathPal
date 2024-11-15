@@ -1,26 +1,70 @@
-.place-card {
+.PlaceDetails-card {
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.place-card:hover {
+.PlaceDetails-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.place-image {
+.PlaceDetails-image {
+  width: 100%;
   height: 140px;
+  object-fit: cover;
 }
 
-.place-details {
+.PlaceDetails-details {
   padding: 10px;
+  text-align: center;
 }
 
-.place-title {
+.PlaceDetails-title {
   font-size: 1.2rem;
   font-weight: bold;
+  margin: 0;
 }
 
-.add-to-trip {
+.PlaceDetails-subcategory {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.PlaceDetails-actions {
+  padding: 10px;
   width: 100%;
+}
+
+.PlaceDetails-label {
+  font-size: 1rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.PlaceDetails-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.PlaceDetails-select option {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.PlaceDetails-select input[type="checkbox"] {
+  margin-right: 5px;
 }

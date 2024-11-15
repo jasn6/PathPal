@@ -1,30 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./PlaceDetails.css";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
-import ListItemText from "@mui/material/ListItemText";
 
 const defaultImageUrl = "/static/images/temp-background.jpeg";
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 export default function PlaceDetails({ plan, place, lists }) {
   const [added, setAdded] = useState([]);
@@ -36,7 +13,7 @@ export default function PlaceDetails({ plan, place, lists }) {
         `http://localhost:3001/api/place/${place.location_id}/${plan}`,
         {
           headers: {
-            "Content-Type": "applications/json",
+            "Content-Type": "application/json",
           },
           credentials: "include",
         }
@@ -128,53 +105,48 @@ export default function PlaceDetails({ plan, place, lists }) {
   };
 
   const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setAdded(typeof value === "string" ? value.split(",") : value);
+    const { options } = event.target;
+    const selectedValues = Array.from(options)
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+    setAdded(selectedValues);
   };
 
   return (
-    <Card className="place-card">
-      <CardMedia
-        className="place-image"
-        image={place?.photo?.images?.small?.url || defaultImageUrl}
-        title={place.name}
+    <div className="PlaceDetails-card">
+      <img
+        className="PlaceDetails-image"
+        src={place?.photo?.images?.small?.url || defaultImageUrl}
+        alt={place.name}
       />
-      <CardContent className="place-details">
-        <Typography
-          className="place-title"
-          gutterBottom
-          variant="h5"
-          component="div"
+      <div className="PlaceDetails-details">
+        <h2 className="PlaceDetails-title">{place.name}</h2>
+        <p className="PlaceDetails-subcategory">{place.subcategory_ranking}</p>
+      </div>
+      <div className="PlaceDetails-actions">
+        <label htmlFor="PlaceDetails-select" className="PlaceDetails-label">
+          Add To Trip
+        </label>
+        <select
+          id="PlaceDetails-select"
+          className="PlaceDetails-select"
+          multiple
+          value={added}
+          onChange={handleChange}
+          onBlur={() => updateEntries()}
         >
-          {place.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {place.subcategory_ranking}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <FormControl className="add-to-trip" variant="outlined">
-          <InputLabel>Add To Trip</InputLabel>
-          <Select
-            multiple
-            value={added}
-            onChange={handleChange}
-            input={<OutlinedInput label="Tag" />}
-            renderValue={() => `Added to ${added.length} lists`}
-            onBlur={() => updateEntries()}
-            MenuProps={MenuProps}
-          >
-            {lists.map((listItem) => (
-              <MenuItem key={listItem._id} value={listItem._id}>
-                <Checkbox checked={added.indexOf(listItem._id) > -1} />
-                <ListItemText primary={listItem.name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </CardActions>
-    </Card>
+          {lists.map((listItem) => (
+            <option key={listItem._id} value={listItem._id}>
+              <input
+                type="checkbox"
+                checked={added.indexOf(listItem._id) > -1}
+                readOnly
+              />
+              {listItem.name}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
   );
 }

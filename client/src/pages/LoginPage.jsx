@@ -1,23 +1,13 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../util/AuthContext";
-
-const defaultTheme = createTheme();
+import { FaUserCircle } from "react-icons/fa";
+import "./LoginPage.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { setLoggedIn } = useAuth();
+
   async function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,7 +29,7 @@ export default function LoginPage() {
         alert(res.message);
       } else {
         const errorData = await response.json();
-        alert(errorData.error); // Set error message in state
+        alert(errorData.error);
       }
     } catch (err) {
       console.log(err);
@@ -49,72 +39,46 @@ export default function LoginPage() {
   }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <div className="LoginPage-background">
+      <div className="LoginPage-container">
+        <div className="LoginPage-avatar">
+          <FaUserCircle className="LoginPage-icon" />
+        </div>
+        <h1 className="LoginPage-title">Login</h1>
+        <form onSubmit={handleSubmit} className="LoginPage-form">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email Address"
+            required
+            autoComplete="email"
+            autoFocus
+            className="LoginPage-input"
+          />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+            autoComplete="current-password"
+            className="LoginPage-input"
+          />
+          <button type="submit" className="LoginPage-submitButton">
+            Login
+          </button>
+          <div className="LoginPage-links">
+            <a href="#" className="LoginPage-link">
+              Forgot password?
+            </a>
+            <div className="LoginPage-Gap"></div>
+            <a href="/register" className="LoginPage-link">
+              Don't have an account?
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

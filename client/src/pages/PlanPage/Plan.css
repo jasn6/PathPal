@@ -1,0 +1,105 @@
+
+.plan-container {
+    background-color: #f5efe6;
+    border-radius: 8px;
+    border: 1px solid #e8dfca;
+    height: 100vh;
+    overflow: hidden;
+    padding: 20px;
+  }
+  
+  .plan-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .plan-list-container {
+    background-color: #e8dfca;
+    border-radius: 8px;
+    overflow-y: auto;
+    height: calc(100vh - 64px);
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .plan-list-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .plan-list-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .plan-list-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  .plan-map-container {
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .plan-explore-button,
+  .plan-add-button {
+    background-color: #4f6f52;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
+  }
+  
+  .plan-explore-button:hover,
+  .plan-add-button:hover {
+    background-color: #1a4d2e;
+    transform: scale(1.05);
+  }
+  
+  .plan-explore-button:focus,
+  .plan-add-button:focus {
+    outline: 2px solid #1a4d2e;
+    transform: scale(1.05);
+  }
+
+  .plan-title-form-control {
+    position: relative;
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .plan-title-text-field {
+    background-color: #e8dfca;
+    width: auto;
+    max-width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 0 10px;
+    font-weight: 800;
+    color: #000;
+    font-size: 1.5rem;
+    border: 1px solid #cccccc;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .plan-title-text-field:focus {
+    background-color: #ccc;
+    border-color: #4f6f52;
+  }
+  
+  .plan-title-text-field:hover {
+    background-color: #9e9694;
+  }
+  
+  .plan-title-text-field:hover,
+  .plan-title-form-control:hover {
+    cursor: text;
+  }
+  
