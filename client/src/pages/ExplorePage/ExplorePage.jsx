@@ -11,6 +11,8 @@ export default function ExplorePage() {
   const [type, setType] = useState("restaurants");
   const [places, setPlaces] = useState([]);
   const [lists, setLists] = useState([]);
+  const [lists2, setLists2] = useState([]);
+  const [locations, setLocations] = useState([]); // New state for location details
   const { planCode } = useParams();
 
   const getList = async () => {
@@ -32,6 +34,59 @@ export default function ExplorePage() {
     }
   };
 
+  const getList2 = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/location/nearbyLocations/${coords.lat}/${coords.lng}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setLists2(data.locationIds);
+      /*
+    try {
+      const data = [
+        "25273309",
+        "27177490",
+        "25458301",
+        "25946349",
+        "23476013",
+        "23162110",
+        "26301425",
+        "25359146",
+        "8516144",
+        "9796517",
+      ];
+    */
+
+      // Fetch details for each locationID and store in locations state
+      const locationDetails = await Promise.all(
+        data.locationIds.map(async (locationID) => {
+          const res = await fetch(
+            `http://localhost:3001/api/location/getDetails/${locationID}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }
+          );
+          return await res.json();
+        })
+      );
+
+      setLocations(locationDetails);
+      console.log(locations);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getPlanInfo(planCode).then((data) =>
       setCoords({ lat: data.lat, lng: data.lng })
@@ -45,6 +100,7 @@ export default function ExplorePage() {
       getPlacesInfo(type, coords.lat, coords.lng).then((data) =>
         setPlaces(data)
       );
+      getList2();
     }
   }, [coords, type]);
 
@@ -66,7 +122,7 @@ export default function ExplorePage() {
           />
         </div>
         <div className="ExplorePage-map">
-          <Map coords={coords} places={places} />
+          <Map coords={coords} locations={locations}/>
         </div>
       </div>
     </>
