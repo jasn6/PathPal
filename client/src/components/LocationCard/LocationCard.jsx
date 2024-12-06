@@ -30,7 +30,7 @@ const responsive = {
   mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
 };
 
-function LocationCard({ location, lists }) {
+function LocationCard({ location, lists, number }) {
   const {
     name,
     address_obj,
@@ -72,12 +72,21 @@ function LocationCard({ location, lists }) {
     <>
       <Card className="location-card">
         <Box className="header-section">
-          <Avatar
-            src={rating_image_url}
-            className="ranking-avatar"
-            alt="Ranking"
-          />
-          <Typography variant="h6" className="location-title">
+          <Box
+            className="custom-marker"
+            style={{
+              backgroundColor: "#668F72",
+              marginRight: "8px",
+            }}
+          >
+            <Box className="inner-circle">{number}</Box>
+          </Box>
+
+          <Typography
+            variant="h6"
+            className="location-title"
+            style={{ flexGrow: 1 }}
+          >
             {name}
           </Typography>
           <IconButton
@@ -86,6 +95,7 @@ function LocationCard({ location, lists }) {
             aria-controls={isDropdownOpen ? "dropdown-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={isDropdownOpen ? "true" : undefined}
+            style={{ marginLeft: "16px" }}
           >
             <BookmarkBorderIcon />
           </IconButton>

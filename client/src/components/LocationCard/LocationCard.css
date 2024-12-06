@@ -178,3 +178,33 @@
   font-weight: bold;
   color: #555;
 }
+
+.custom-marker {
+  width: 30px;
+  height: 30px;
+  background-color: inherit;
+  border-radius: 50% 50% 0 50%;
+  position: relative;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.inner-circle {
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
