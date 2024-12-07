@@ -3,6 +3,28 @@ const Location = require("../models/Location.js");
 
 const LocationRouter = express.Router();
 
+const getLatLngFromAddress = async (address) => {
+  const apiKey = process.env.GOOGLE_API_KEY;
+  const encodedAddress = encodeURIComponent(address);
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.status === "OK") {
+      const location = data.results[0].geometry.location;
+      return { latitude: location.lat, longitude: location.lng };
+    } else {
+      console.error("Geocoding API Error:", data.status);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching geocoding data:", error);
+    return null;
+  }
+};
+
 LocationRouter.get("/nearbyLocations/:lat/:lng/:type", async (req, res) => {
   try {
     const options = { method: "GET", headers: { accept: "application/json" } };
