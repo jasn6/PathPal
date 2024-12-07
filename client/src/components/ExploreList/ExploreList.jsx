@@ -4,33 +4,55 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import PlaceDetails from "../PlaceDetails/PlaceDetails";
+import LocationCard from "../LocationCard/LocationCard";
 
-export default function ExploreList({ plan, type, setType, places, lists }) {
+export default function ExploreList({
+  plan,
+  type,
+  setType,
+  locations,
+  lists,
+  loading,
+}) {
+  const handleTypeChange = (event) => {
+    const newType = event.target.value;
+    console.log(`Changing type to: ${newType}`);
+    setType(newType);
+  };
+
   return (
     <div className="explore-list-container">
       <FormControl className="explore-list-form" variant="standard">
         <InputLabel>Type</InputLabel>
-        <Select value={type} onChange={(e) => setType(e.target.value)}>
+        <Select value={type} onChange={handleTypeChange}>
           <MenuItem value={"restaurants"}>Restaurants</MenuItem>
           <MenuItem value={"attractions"}>Attractions</MenuItem>
           <MenuItem value={"hotels"}>Hotels</MenuItem>
         </Select>
       </FormControl>
-      <div className="places-container">
-        {places?.map(
-          (place, i) =>
-            place["name"] && (
-              <PlaceDetails
-                plan={plan}
-                place={place}
+
+      {loading ? (
+        <div className="loading-container">
+          <p>Loading locations...</p>
+        </div>
+      ) : locations && locations.length > 0 ? (
+        <div className="places-container">
+          {locations.map((location, i) => {
+            return (
+              <LocationCard
+                location={location}
                 lists={lists}
-                key={i}
-                className="place-card"
+                key={location.location_id || i}
+                number={i + 1}
               />
-            )
-        )}
-      </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="loading-container">
+          <p>No locations available.</p>
+        </div>
+      )}
     </div>
   );
 }
