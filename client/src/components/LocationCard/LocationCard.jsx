@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Avatar,
   Box,
   Link,
   IconButton,
@@ -32,14 +31,14 @@ const responsive = {
 
 function LocationCard({ location, lists, number }) {
   const {
-    name,
-    address_obj,
-    web_url,
-    phone,
-    rating,
-    rating_image_url,
-    num_reviews,
-  } = location.locationDetails;
+    name = "Unnamed Location",
+    address_obj = {},
+    web_url = "#",
+    phone = "Phone not available",
+    rating = "N/A",
+    rating_image_url = "",
+    num_reviews = 0,
+  } = location.locationDetails || {};
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [added, setAdded] = useState([]);
@@ -67,6 +66,22 @@ function LocationCard({ location, lists, number }) {
     setExpandedReview((prev) => (prev === index ? null : index));
 
   const handleCarouselChange = () => setExpandedReview(null);
+
+  const getPhotoUrl = (photo) => {
+    if (typeof photo === "string") {
+      return photo; // Photo is a direct URL
+    }
+
+    if (photo?.images?.original?.url) {
+      return photo.images.original.url; // Photo is an object
+    }
+
+    if (photo?.image) {
+      return photo.image; // Photo is an object with `image` key
+    }
+
+    return null; // Return null if no valid URL is found
+  };
 
   return (
     <>
@@ -177,7 +192,7 @@ function LocationCard({ location, lists, number }) {
             </Box>
           </Grid>
 
-          {location.photos.length > 0 && (
+          {location.photos && location.photos.length > 0 && (
             <Grid
               item
               xs={5}
@@ -196,8 +211,8 @@ function LocationCard({ location, lists, number }) {
                 }}
               >
                 <img
-                  src={location.photos[0].images.original.url}
-                  alt={`${name} photo`}
+                  src={getPhotoUrl(location.photos[0])}
+                  alt={`${location.name || "Location"} photo`}
                   className="carousel-image"
                   style={{
                     width: "100%",
@@ -328,21 +343,31 @@ function LocationCard({ location, lists, number }) {
       >
         <Fade in={isModalOpen}>
           <Box className="modal-content">
-            <Carousel
-              responsive={responsive}
-              containerClass="carousel-container"
-              itemClass="carousel-item"
-            >
-              {location.photos.map((photo, index) => (
-                <Box key={index} className="carousel-image-wrapper">
-                  <img
-                    src={photo.images.original.url}
-                    alt={`Location photo ${index + 1}`}
-                    className="carousel-modal-image"
-                  />
-                </Box>
-              ))}
-            </Carousel>
+            {location.photos && location.photos.length > 0 ? (
+              <Carousel
+                responsive={responsive}
+                containerClass="carousel-container"
+                itemClass="carousel-item"
+              >
+                {location.photos.map((photo, index) => {
+                  const photoUrl = getPhotoUrl(photo);
+                  if (!photoUrl) return null; // Skip if URL is invalid
+                  return (
+                    <Box key={index} className="carousel-image-wrapper">
+                      <img
+                        src={photoUrl}
+                        alt={`Location photo ${index + 1}`}
+                        className="carousel-modal-image"
+                      />
+                    </Box>
+                  );
+                })}
+              </Carousel>
+            ) : (
+              <Typography variant="body2" color="textSecondary">
+                No photos available for this location.
+              </Typography>
+            )}
           </Box>
         </Fade>
       </Modal>
